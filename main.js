@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (nombreUrl) {
     const contenedorTexto = document.querySelector('.texto-rgb');
     if (contenedorTexto) {
-      contenedorTexto.innerText = nombreUrl.toUpperCase();
+      contenedorTexto.innerText = `${nombreUrl.toUpperCase()} ✨💛`;
     }
   }
 
