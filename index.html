@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¡Feliz Día!</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Efectos de la pantalla- brillos/Efectos -->
+  <canvas id="canvas-efectos"></canvas>
+
+  <!-- Botón Flotante para Mute -->
+  <button id="btn-musica" class="btn-musica" title="Silenciar / Activar Sonido">
+    <span id="icono-musica">🔇</span>
+  </button>
+
+  <!-- Musica de fondo -->
+  <audio id="musica-fondo" loop preload="auto" playsinline>
+    <source src="Musica/WhatsApp Audio 2026-09-16 at 18.08.20.mp4" type="audio/mpeg">
+  </audio>
+
+  <!--Letras de la pagina -->
+  <div class="mensaje-container">
+    <h1 class="titulo" id="titulo-interactivo">¡Feliz Día! ✨🌻</h1>
+    <p class="subtitulo">Eres una persona muy especial. ¡Que tengas un día brillante!</p>
+    <div class="indicador-instruccion">👆 Toca la pantalla para activar la música y ver sorpresas 💛</div>
+  </div>
+
+  <!-- Efecto de los corazones amarillas -->
+  <div class="ramo" id="ramo"></div>
+
+  <!-- Nombre de la afortunada -->
+  <div class="tarjeta-nombre-rgb">
+    <span class="texto-rgb">NAME</span>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
