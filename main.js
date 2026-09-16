@@ -13,79 +13,37 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- ELEMENTOS DEL DOM ---
   const ramo = document.getElementById("ramo");
   const tituloInteractivo = document.getElementById("titulo-interactivo");
-  const btnMusica = document.getElementById("btn-musica");
   const musicaFondo = document.getElementById("musica-fondo");
-  const iconoMusica = document.getElementById("icono-musica");
 
-  // --- CONTROL DE MÚSICA CANTADA (CORO DE FLORES AMARILLAS) ---
-  const TIEMPO_CORO = 38; // Inicia cuando empieza a cantar: "Él la estaba esperando con flores amarillas..."
+  // --- CONTROL DE MÚSICA DE GOLPE AL PRIMER CLIC ---
+  const TIEMPO_CORO = 38; // Inicia en el segundo 38
   let musicaIniciada = false;
 
-  function activarMusicaCantada() {
+  function reproducirDeGolpe() {
     if (!musicaIniciada && musicaFondo) {
       musicaFondo.currentTime = TIEMPO_CORO;
+      musicaFondo.muted = false;
       
-      const promesaPlay = musicaFondo.play();
-      if (promesaPlay !== undefined) {
-        promesaPlay.then(() => {
-          musicaIniciada = true;
-          musicaFondo.muted = false;
-          if (btnMusica) btnMusica.classList.add("reproduciendo");
-          if (iconoMusica) iconoMusica.innerText = "🔊";
-        }).catch((err) => {
-          console.log("Esperando toque del usuario para reproducir en celular/navegador...");
-        });
-      }
+      musicaFondo.play().then(() => {
+        musicaIniciada = true;
+      }).catch((err) => {
+        console.log("Esperando interacción del usuario...");
+      });
     }
   }
 
-  // Intentar iniciar audio
-  activarMusicaCantada();
+  // Cualquier toque en la pantalla iniciará la música al instante
+  ["click", "touchstart", "pointerdown"].forEach((evento) => {
+    window.addEventListener(evento, reproducirDeGolpe, { once: true });
+  });
 
-  // Reiniciar desde el coro si termina
+  // Reiniciar desde el coro si termina la canción
   if (musicaFondo) {
     musicaFondo.addEventListener("ended", () => {
       musicaFondo.currentTime = TIEMPO_CORO;
       musicaFondo.play();
     });
   }
-
-  // Botón MUTE / UNMUTE
-  if (btnMusica) {
-    btnMusica.addEventListener("click", (e) => {
-      e.stopPropagation();
-      
-      if (!musicaIniciada) {
-        activarMusicaCantada();
-        return;
-      }
-
-      if (musicaFondo.paused) {
-        musicaFondo.play();
-        musicaFondo.muted = false;
-        if (iconoMusica) iconoMusica.innerText = "🔊";
-        btnMusica.classList.add("reproduciendo");
-      } else {
-        if (musicaFondo.muted) {
-          musicaFondo.muted = false;
-          if (iconoMusica) iconoMusica.innerText = "🔊";
-          btnMusica.classList.add("reproduciendo");
-        } else {
-          musicaFondo.muted = true;
-          if (iconoMusica) iconoMusica.innerText = "🔇";
-          btnMusica.classList.remove("reproduciendo");
-        }
-      }
-    });
-  }
-
-  // Primer toque activa la canción
-  const eventosToque = ["click", "touchstart", "touchend"];
-  eventosToque.forEach((evento) => {
-    document.body.addEventListener(evento, () => {
-      activarMusicaCantada();
-    }, { once: true });
-  });
 
   // --- CONFIGURACIÓN DEL RAMO DE FLORES ---
   const floresConfig = [
@@ -175,7 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (ramo) {
     ramo.addEventListener("click", (e) => {
       e.stopPropagation();
-      activarMusicaCantada();
+      reproducirDeGolpe();
       lanzarEmojiFlotante(e.clientX, e.clientY, "💛");
     });
   }
@@ -183,7 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (tituloInteractivo) {
     tituloInteractivo.addEventListener("click", (e) => {
       e.stopPropagation();
-      activarMusicaCantada();
+      reproducirDeGolpe();
       lanzarEmojiFlotante(e.clientX, e.clientY, "🫶");
     });
   }
@@ -237,7 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     document.body.addEventListener("click", (e) => {
-      activarMusicaCantada();
+      reproducirDeGolpe();
       crearFuegoArtificial(e.clientX, e.clientY);
     });
 
