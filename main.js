@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // --- LEER NOMBRE DESDE EL ENLACE (?nombre=Tania) ---
+  // --- LEER NOMBRE DESDE EL ENLACE ---
   const parametros = new URLSearchParams(window.location.search);
   const nombreUrl = parametros.get('nombre');
   
