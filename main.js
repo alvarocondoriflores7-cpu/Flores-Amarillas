@@ -1,4 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Leer el nombre desde el enlace 
+  const parametros = new URLSearchParams(window.location.search);
+  const nombreUrl = parametros.get('nombre');
+  
+  if (nombreUrl) {
+    const contenedorTexto = document.querySelector('.texto-rgb');
+    if (contenedorTexto) {
+      contenedorTexto.innerText = nombreUrl.toUpperCase();
+    }
+  }
+  
+document.addEventListener("DOMContentLoaded", () => {
   const ramo = document.getElementById("ramo");
   const tituloInteractivo = document.getElementById("titulo-interactivo");
   const btnMusica = document.getElementById("btn-musica");
